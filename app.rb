@@ -23,6 +23,11 @@ class App
     return gets.chomp
   end
 
+  # 1. list books
+  def list_books
+    @books.each { |book| puts "Title: #{book.title}, Author: #{book.author}" }
+  end
+  
   # 3
   def create_person()
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
@@ -114,6 +119,11 @@ class App
     @rentals.each do |rent|
       puts "Date: #{rent.date}, Book: #{rent.book.title} Author: #{rent.book.author}" if rent.person.id == id
     end
+  end
+
+  # 7. exit
+  def close
+    puts 'Thank you for using this app!'
   end
 
 end
