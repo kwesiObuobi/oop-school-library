@@ -70,7 +70,7 @@ class App
 
   end # end create_person
 
-  # create a book
+  # 4. create a book
   def create_book
     print 'Book Title: '
     title = gets.chomp
@@ -82,6 +82,38 @@ class App
     @books << book
 
     puts 'Book created successfully'
+  end
+
+  # 5. create a rental
+  def create_rental
+    return if @books.empty? || @people.empty?
+
+    puts 'Select a book from the following list of number'
+    @books.each_with_index { |book, index| puts "#{index}) Title: #{book.title}, Author: #{book.author}" }
+    book = gets.chomp.to_i
+
+    puts 'Select a person from the following list of number (not ID)'
+    @people.each_with_index do |person, index|
+      puts "#{index}) Name: #{person.name} Age: #{person.age} Id: #{person.id}"
+    end
+    person = gets.chomp.to_i
+
+    print 'Date: '
+    date = gets.chomp
+
+    rental = Rental.new(date, @people[person], @books[book])
+    @rentals << rented
+
+    puts 'Rental created successfully'
+  end
+
+  # 6. list rentals
+  def list_rentals
+    print 'Person ID: '
+    id = gets.chomp.to_i
+    @rentals.each do |rent|
+      puts "Date: #{rent.date}, Book: #{rent.book.title} Author: #{rent.book.author}" if rent.person.id == id
+    end
   end
 
 end
