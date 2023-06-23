@@ -1,4 +1,7 @@
-
+require_relative './student'
+require_relative './teacher'
+require_relative './book'
+require_relative './rental'
 
 class App
   def initialize
@@ -8,9 +11,8 @@ class App
   end
 
   # 0
-  def intro
-    puts "\nWelcome to School Library App!\n\n"
-    puts 'Please choose an option by entering a number:'
+  def options
+    puts "\n\nPlease choose an option by entering a number:"
 
     puts '1 - List all books'
     puts '2 - List all people'
@@ -20,12 +22,12 @@ class App
     puts '6 - List all rentals for a given person id'
     puts '7 - Exit'
 
-    return gets.chomp.to_i
+    gets.chomp.to_i
   end
 
   # 1. list books
   def list_books
-    @books.each { |book| puts "Title: #{book.title}, Author: #{book.author}" }
+    @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
   end
 
   # 2. list people
@@ -61,7 +63,7 @@ class App
       end
 
       puts 'Person Created Successfully!'
-    
+
     when 2
       print 'Teacher age: '
       age = gets.chomp
@@ -77,8 +79,7 @@ class App
 
       puts 'Teacher created successfully!'
     end
-
-  end # end create_person
+  end
 
   # 4. create a book
   def create_book
@@ -112,7 +113,7 @@ class App
     date = gets.chomp
 
     rental = Rental.new(date, @people[person], @books[book])
-    @rentals << rented
+    @rentals << rental
 
     puts 'Rental created successfully'
   end
@@ -122,7 +123,7 @@ class App
     print 'Person ID: '
     id = gets.chomp.to_i
     @rentals.each do |rent|
-      puts "Date: #{rent.date}, Book: #{rent.book.title} Author: #{rent.book.author}" if rent.person.id == id
+      puts "Date: #{rent.date}, Book: \"#{rent.book.title}\" by #{rent.book.author}" if rent.person.id == id
     end
   end
 
@@ -132,31 +133,32 @@ class App
   end
 
   def run
-    while true
-      options = options()
+    puts "\nWelcome to School Library App!\n"
 
-      case options
+    loop do
+      option = options
+
+      case option
       when 1
-        list_books()
+        list_books
       when 2
-        list_people()
+        list_people
       when 3
-        create_person()
+        create_person
       when 4
-        create_book()
+        create_book
       when 5
-        create_rental()
+        create_rental
       when 6
-        list_rentals()
+        list_rentals
       when 7
-        close()
+        close
         break
       else
         puts "Invalid input \n\n"
       end
     end
   end
-
 end
 
 def main
@@ -164,4 +166,4 @@ def main
   app.run
 end
 
-main()
+main
