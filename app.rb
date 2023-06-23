@@ -70,6 +70,20 @@ class App
 
   end # end create_person
 
+  # create a book
+  def create_book
+    print 'Book Title: '
+    title = gets.chomp
+
+    print 'Book Author: '
+    author = gets.chomp
+
+    book = Book.new(title, author)
+    @books << book
+
+    puts 'Book created successfully'
+  end
+
 end
 
 
