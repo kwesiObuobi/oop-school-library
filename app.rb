@@ -20,14 +20,19 @@ class App
     puts '6 - List all rentals for a given person id'
     puts '7 - Exit'
 
-    return gets.chomp
+    return gets.chomp.to_i
   end
 
   # 1. list books
   def list_books
     @books.each { |book| puts "Title: #{book.title}, Author: #{book.author}" }
   end
-  
+
+  # 2. list people
+  def list_people
+    @people.each { |person| puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}" }
+  end
+
   # 3
   def create_person()
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
@@ -126,7 +131,32 @@ class App
     puts 'Thank you for using this app!'
   end
 
+  def run
+    while true
+      options = options()
+
+      case options
+      when 1
+        list_books()
+      when 2
+        list_people()
+      when 3
+        create_person()
+      when 4
+        create_book()
+      when 5
+        create_rental()
+      when 6
+        list_rentals()
+      when 7
+        close()
+        break
+      else
+        puts "Invalid input \n\n"
+      end
+    end
+  end
+
 end
 
 
-puts(intro())
