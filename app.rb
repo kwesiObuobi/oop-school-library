@@ -1,7 +1,7 @@
-require_relative './student'
-require_relative './teacher'
-require_relative './book'
-require_relative './rental'
+require_relative 'student'
+require_relative 'teacher'
+require_relative 'book'
+require_relative 'rental'
 
 class App
   def initialize
@@ -36,49 +36,48 @@ class App
   end
 
   # 3
-  def create_person()
+  def create_person
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     option = gets.chomp.to_i
 
     case option
     when 1
-      print 'Student age: '
-      age = gets.chomp
-
-      print 'Student name: '
-      name = gets.chomp
-
-      print 'Has parent permission? [Y/N]: '
-      permission = gets.chomp.upcase
-
-      case permission
-      when 'Y'
-        student = Student.new(nil, age, name, parent_permission: true)
-        @people << student
-      when 'N'
-        student = Student.new(nil, age, name, parent_permission: false)
-        @people << student
-      else
-        puts 'Invalid input!'
-      end
-
-      puts 'Person Created Successfully!'
-
+      create_student
     when 2
-      print 'Teacher age: '
-      age = gets.chomp
-
-      print 'Teacher name: '
-      name = gets.chomp
-
-      print 'Specialization: '
-      specialization = gets.chomp
-
-      teacher = Teacher.new(specialization, age, name, parent_permission: true)
-      @people << teacher
-
-      puts 'Teacher created successfully!'
+      create_teacher
     end
+  end
+
+  def create_student
+    print 'Student age: '
+    age = gets.chomp
+    print 'Student name: '
+    name = gets.chomp
+    print 'Has parent permission? [Y/N]: '
+    permission = gets.chomp.upcase
+    case permission
+    when 'Y'
+      student = Student.new(nil, age, name, parent_permission: true)
+      @people << student
+    when 'N'
+      student = Student.new(nil, age, name, parent_permission: false)
+      @people << student
+    else
+      puts 'Invalid input!'
+    end
+    puts 'Person Created Successfully!'
+  end
+
+  def create_teacher
+    print 'Teacher age: '
+    age = gets.chomp
+    print 'Teacher name: '
+    name = gets.chomp
+    print 'Specialization: '
+    specialization = gets.chomp
+    teacher = Teacher.new(specialization, age, name, parent_permission: true)
+    @people << teacher
+    puts 'Teacher created successfully!'
   end
 
   # 4. create a book
@@ -130,33 +129,6 @@ class App
   # 7. exit
   def close
     puts 'Thank you for using this app!'
-  end
-
-  def run
-    puts "\nWelcome to School Library App!\n"
-
-    loop do
-      option = options
-
-      case option
-      when 1
-        list_books
-      when 2
-        list_people
-      when 3
-        create_person
-      when 4
-        create_book
-      when 5
-        create_rental
-      when 6
-        list_rentals
-      when 7
-        close
-        break
-      else
-        puts "Invalid input \n\n"
-      end
-    end
+    exit
   end
 end
