@@ -130,10 +130,13 @@ class App
   # 7. exit
   def close
     puts 'Thank you for using this app!'
+    save_books
     exit
   end
 
-  def save_people
-
+  def save_books
+    formatted_books = []
+    @books.each { |book| formatted_books << {title: book.title, author: book.author}}
+    File.write('data/books.json', JSON.pretty_generate(formatted_books))
   end
 end
