@@ -129,8 +129,9 @@ class App
 
   # 7. exit
   def close
-    puts 'Thank you for using this app!'
     save_books
+    save_people
+    puts 'Thank you for using this app!'
     exit
   end
 
@@ -138,5 +139,19 @@ class App
     formatted_books = []
     @books.each { |book| formatted_books << {title: book.title, author: book.author}}
     File.write('data/books.json', JSON.pretty_generate(formatted_books))
+  end
+
+  def save_people
+    formatted_people = []
+
+    @people.each do |person|
+      if person.instance_of?(::Teacher)
+        formatted_people << { 'type' => 'Teacher', 'id' => person.id, 'name' => person.name, 'age' => person.age, 'specialization' => person.specialization }
+      elsif person.class == Student
+        formatted_people << { 'type' => 'Student', 'id' => person.id, 'name' => person.name, 'age' => person.age}
+      end
+    end
+
+    File.write('data/people.json', JSON.pretty_generate(formatted_people))
   end
 end
