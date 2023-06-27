@@ -1,0 +1,23 @@
+[
+  {
+    "person": "Student",
+    "id": 668,
+    "name": "Moo",
+    "age": "12",
+    "parent_permission": true
+  },
+  {
+    "person": "Student",
+    "id": 668,
+    "name": "Mia",
+    "age": "23",
+    "parent_permission": false
+  },
+  {
+    "person": "Teacher",
+    "id": 431,
+    "name": "yuo",
+    "age": "45",
+    "specialization": "Good"
+  }
+]

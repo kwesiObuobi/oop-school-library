@@ -137,7 +137,7 @@ class App
 
   def save_books
     formatted_books = []
-    @books.each { |book| formatted_books << {title: book.title, author: book.author}}
+    @books.each { |book| formatted_books << { title: book.title, author: book.author } }
     File.write('data/books.json', JSON.pretty_generate(formatted_books))
   end
 
@@ -145,11 +145,20 @@ class App
     formatted_people = []
 
     @people.each do |person|
-      if person.instance_of?(::Teacher)
-        formatted_people << { 'type' => 'Teacher', 'id' => person.id, 'name' => person.name, 'age' => person.age, 'specialization' => person.specialization }
-      elsif person.class == Student
-        formatted_people << { 'type' => 'Student', 'id' => person.id, 'name' => person.name, 'age' => person.age}
-      end
+      # if person.instance_of?(Teacher)
+      #   formatted_people << { person: 'Teacher', id: person.id, name: person.name, age: person.age,
+      #                         specialization: person.specialization }
+      # else
+      #   formatted_people << { person: 'Student', id: person.id, name: person.name, age: person.age,
+      #                         parent_permission: person.parent_permission }
+      # end
+      formatted_people << if person.instance_of?(Teacher)
+                            { person: 'Teacher', id: person.id, name: person.name, age: person.age,
+                              specialization: person.specialization }
+                          else
+                            { person: 'Student', id: person.id, name: person.name, age: person.age,
+                              parent_permission: person.parent_permission }
+                          end
     end
 
     File.write('data/people.json', JSON.pretty_generate(formatted_people))
