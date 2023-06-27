@@ -2,6 +2,7 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
+require 'json'
 
 class App
   def initialize
@@ -130,5 +131,9 @@ class App
   def close
     puts 'Thank you for using this app!'
     exit
+  end
+
+  def save_people
+
   end
 end
