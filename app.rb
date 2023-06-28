@@ -131,6 +131,7 @@ class App
   def close
     save_books
     save_people
+    save_rentals
     puts 'Thank you for using this app!'
     exit
   end
@@ -145,13 +146,6 @@ class App
     formatted_people = []
 
     @people.each do |person|
-      # if person.instance_of?(Teacher)
-      #   formatted_people << { person: 'Teacher', id: person.id, name: person.name, age: person.age,
-      #                         specialization: person.specialization }
-      # else
-      #   formatted_people << { person: 'Student', id: person.id, name: person.name, age: person.age,
-      #                         parent_permission: person.parent_permission }
-      # end
       formatted_people << if person.instance_of?(Teacher)
                             { person: 'Teacher', id: person.id, name: person.name, age: person.age,
                               specialization: person.specialization }
@@ -162,5 +156,12 @@ class App
     end
 
     File.write('data/people.json', JSON.pretty_generate(formatted_people))
+  end
+
+  def save_rentals
+    # we need personID, book name, book author
+    formatted_rentals = []
+    @rentals.each { |item| formatted_rentals << { date: item.date, person_id: item.person.id, book: item.book.title, author: item.book.author }}
+    File.write('data/rentals.json', JSON.pretty_generate(formatted_rentals))
   end
 end
