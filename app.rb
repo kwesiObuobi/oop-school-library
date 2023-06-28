@@ -6,16 +6,24 @@ require 'json'
 
 class App
   def initialize
-    @books = []
+    @books = load_books
     @people = []
     @rentals = []
   end
 
   def load_file_content(file)
-    filename = "files/#{file}.json"
+    filename = "data/#{file}.json"
     return [] unless File.exist?(filename)
     content = File.read(filename)
     JSON.parse(content)
+  end
+
+  def load_books
+    books = load_file_content('books')
+    return [] unless books.length > 0
+    retrieved_books = []
+    books.each { |book| retrieved_books << Book.new(book['title'], book['author']) }
+    retrieved_books
   end
 
   # 0
