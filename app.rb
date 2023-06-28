@@ -8,7 +8,7 @@ class App
   def initialize
     @books = load_books
     @people = load_people
-    @rentals = []
+    @rentals = load_rentals
   end
 
   def load_file_content(file)
@@ -42,6 +42,19 @@ class App
                           end
     end
     retrieved_people
+  end
+
+  def load_rentals
+    rentals = load_file_content('rentals')
+    return [] unless rentals.length.positive?
+
+    retrieved_rentals = []
+    rentals.each do |rental|
+      person = @people.select { |item| item.name == rental['person_name'] }
+      book = @books.select { |item| item.title == rental['book'] }
+      retrieved_rentals << Rental.new(rental['date'], person[0], book[0]) if !person.nil? && !book.nil?
+    end
+    retrieved_rentals
   end
 
   # 0
@@ -195,7 +208,7 @@ class App
     # we need personID, book name, book author
     formatted_rentals = []
     @rentals.each do |item|
-      formatted_rentals << { date: item.date, person_id: item.person.id, book: item.book.title,
+      formatted_rentals << { date: item.date, person_name: item.person.name, book: item.book.title,
                              author: item.book.author }
     end
     File.write('data/rentals.json', JSON.pretty_generate(formatted_rentals))

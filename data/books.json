@@ -6,5 +6,9 @@
   {
     "title": "New book",
     "author": "New Author"
+  },
+  {
+    "title": "",
+    "author": ""
   }
 ]
