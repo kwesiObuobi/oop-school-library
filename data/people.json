@@ -1,3 +1,9 @@
 [
-
+  {
+    "person": "Student",
+    "id": 449,
+    "name": "Nick",
+    "age": "23",
+    "parent_permission": true
+  }
 ]
