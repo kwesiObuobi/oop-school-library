@@ -11,6 +11,13 @@ class App
     @rentals = []
   end
 
+  def load_file_content(file)
+    filename = "files/#{file}.json"
+    return [] unless File.exist?(filename)
+    content = File.read(filename)
+    JSON.parse(content)
+  end
+
   # 0
   def options
     puts "\n\nPlease choose an option by entering a number:"
@@ -161,7 +168,10 @@ class App
   def save_rentals
     # we need personID, book name, book author
     formatted_rentals = []
-    @rentals.each { |item| formatted_rentals << { date: item.date, person_id: item.person.id, book: item.book.title, author: item.book.author }}
+    @rentals.each do |item|
+      formatted_rentals << { date: item.date, person_id: item.person.id, book: item.book.title,
+                             author: item.book.author }
+    end
     File.write('data/rentals.json', JSON.pretty_generate(formatted_rentals))
   end
 end
