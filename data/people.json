@@ -1,16 +1,30 @@
 [
   {
     "person": "Student",
-    "id": 826,
+    "id": 501,
     "name": "Moo",
     "age": "23",
     "parent_permission": true
   },
   {
     "person": "Student",
-    "id": 239,
+    "id": 720,
     "name": "Mia",
     "age": "24",
     "parent_permission": false
+  },
+  {
+    "person": "Student",
+    "id": 90,
+    "name": "Jude",
+    "age": "30",
+    "parent_permission": false
+  },
+  {
+    "person": "Teacher",
+    "id": 531,
+    "name": "Pearl",
+    "age": "40",
+    "specialization": "Canes"
   }
 ]
