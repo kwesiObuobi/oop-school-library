@@ -2,12 +2,16 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
+require_relative 'load_data'
+require 'json'
 
 class App
+  include LoadData
+
   def initialize
-    @books = []
-    @people = []
-    @rentals = []
+    @books = load_books
+    @people = load_people
+    @rentals = load_rentals
   end
 
   # 0
@@ -128,7 +132,42 @@ class App
 
   # 7. exit
   def close
+    save_books
+    save_people
+    save_rentals
     puts 'Thank you for using this app!'
     exit
+  end
+
+  def save_books
+    formatted_books = []
+    @books.each { |book| formatted_books << { title: book.title, author: book.author } }
+    File.write('data/books.json', JSON.pretty_generate(formatted_books))
+  end
+
+  def save_people
+    formatted_people = []
+
+    @people.each do |person|
+      formatted_people << if person.instance_of?(Teacher)
+                            { person: 'Teacher', id: person.id, name: person.name, age: person.age,
+                              specialization: person.specialization }
+                          else
+                            { person: 'Student', id: person.id, name: person.name, age: person.age,
+                              parent_permission: person.parent_permission }
+                          end
+    end
+
+    File.write('data/people.json', JSON.pretty_generate(formatted_people))
+  end
+
+  def save_rentals
+    # we need personID, book name, book author
+    formatted_rentals = []
+    @rentals.each do |item|
+      formatted_rentals << { date: item.date, person_name: item.person.name, book: item.book.title,
+                             author: item.book.author }
+    end
+    File.write('data/rentals.json', JSON.pretty_generate(formatted_rentals))
   end
 end
